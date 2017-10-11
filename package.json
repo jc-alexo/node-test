@@ -1,0 +1,25 @@
+{
+  "name": "node-test",
+  "version": "1.0.0",
+  "description": "node test for dani",
+  "main": "app.js",
+  "repository": "https://github.com/jc-alexo/node-test.git",
+  "author": "Alex Ofoedu <alexander@junglecreations.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "./node_modules/.bin/babel src -d lib && nodemon app.js",
+    "build": "./node_modules/.bin/babel src -d lib"
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "body-parser": "^1.18.2",
+    "eslint": "^4.8.0",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.31",
+    "nodemon": "^1.12.1"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.0"
+  }
+}
