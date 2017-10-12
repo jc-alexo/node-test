@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>NODE TEST</title>
-    </head>
     <body>
         <!-- <form action="/animals" method="POST">
             <fieldset>
@@ -23,10 +17,10 @@
         <form action="/add" method="POST">
             <fieldset>
                 <legend>ADD GAMES</legend>
-                <input name="name" type="text" placeholder="name"></input>                
+                <input name="addName" type="text" placeholder="name"></input>                
                 <br>
                 <br>
-                <input name="genre" type="text" placeholder="genre"></input>
+                <input name="addGenre" type="text" placeholder=""></input>
                 <br>
                 <br>
                 <button type="submit">add game</input>
@@ -35,7 +29,7 @@
         <form action="/grab" method="POST">
             <fieldset>
                 <legend>RETRIEVE GAMES</legend>
-                <select name="listGrabGames" size="8" disabled></select>
+                <select name="listGrabGames" size="8"></select>
                 <br>
                 <br>
                 <input name="searchGameId" type="text"></input>
@@ -56,5 +50,3 @@
                 <button type="submit">delete game</input>
             </fieldset>
         </form>
-    </body>
-</html>

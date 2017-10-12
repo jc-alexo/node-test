@@ -1,50 +1,96 @@
 const express = require('express', '4.16.2')
 const bodyParser = require('body-parser')
-const MongoClient = require('mongodb').MongoClient
-const app = express();
+const MongoClient = require('mongodb').MongoClient;
+const app = express()
 
-// MongoClient.connect('link-to-mongodb', (err, database) => 
-// {
-    
-// })
+app.set('view engine', 'ejs')
 
-app.use(bodyParser.urlencoded({extended:true}))
+MongoClient.connect('mongodb://localhost:27017/NodeTestDB', (err, database) => 
+{
+    if (err) return console.log(err)
+    db = database
+    app.listen(58531, () => {
+        console.log('connection established on port 58531')
+    })
+})
 
-// app.get('/', function (req, res)
-// {
-//     res.send('Hello World!')
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.get('/', (req, res) => {
+//     // let cursor = db.collection('quotes').find()
+//     db.collection('games').find().toArray(function(err, results) {
+//         console.log(results)
+//     })
+
 // })
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+    
+    if (db.collection('games'))
+    {
+    db.collection('games').find().toArray((err, result) => {
+        if (err) return console.log(err)
+
+        res.render('index.ejs', {games: result})
+    })
+    }
+    else{
+        res.sendFile(__dirname + '/index.html');
+    }
+});
+
+app.get('/del', (req, res) => {
+    db.collection('games').find().toArray((err, result) => {
+        if (err) return console.log(err)
+        res.render('index.ejs', {quotes: result})
+    })
 })
 
-app.post('/quotes', (req, res) => {
-    // console.log('Yo yo yo!')
-    console.log(req.body)
-})
+// app.get('/grab', (req, res) => {
+    
+//     db.collection('games').find().toArray((err, result) => {
+//         if (err) return console.log(err)
 
-app.listen(4560, function()
-{
-    console.log('Example app listening on port 4560!')
-})
+//         res.render('index.ejs', {})
+//         res.redirect('/')
+//     })
+// });
 
-// app.post('/', function(req, res)
-// {
-//     res.send('POSTing')
-// })
-//
-// app.put('/user', function(req, res)
-// {
-//     res.send('Got a PUT request at /user')
-// })
-//
-// app.delete('/user', function(req, res)
-// {
-//     res.send('DELETEing')
-// })
+// app.post('/add', (req, res) => {
+//     // console.log('Yo yo yo!')
+//     db.collection('games').save(req.body, (err, result) => {
+//         if (err) return console.log(err)
+
+//         console.log('saved to database')
+//         res.redirect('/')
+//     })
+// });
+
+app.post('/add', (req, res) => {
+    db.collection('games').save(req.body, (err, result) => {
+        if (err) return console.log(err)
+
+        console.log('saved to database')
+        res.redirect('/')
+    })
+});
+
+
 
 // app.get('/', (req, res) => {
-//     res.send('Hello World')
-// })
+//     res.sendFile(__dirname + '/index.html');
+// });
 
+// app.post('/quotes', (req, res) => {
+//     // console.log('Yo yo yo!')
+//     db.collection('quotes').save(req.body, (err, result) => {
+//         if (err) return console.log(err)
+
+//         console.log('saved to database')
+//         res.redirect('/')
+//     })
+// });
+
+app.listen(4560, () => {
+    
+});
