@@ -1,14 +1,12 @@
 const express = require("express", "4.16.2");
 const bodyParser = require("body-parser");
 const MongoDb = require("mongodb");
-const mongoose = require("mongoose");
 
 const MongoClient = MongoDb.MongoClient;
 const ObjectId = MongoDb.ObjectId;
 const app = express();
 
 app.set("view engine", "ejs");
-mongoose.connect("mongodb://localhost/test");
 
 MongoClient.connect("mongodb://localhost:27017/NodeTestDB", (err, database) => {
 	if (err) return console.log(err);
@@ -26,11 +24,11 @@ app.get("/", (req, res) => {
 	{
 		db.collection("games").find().toArray((err, result) => {
 			if (err) return console.log(err);
-			renderHtml(res, {games: result});     
+			renderHtml(res, {games: result});        
 		});
 	}
 	else{
-		renderHtml(res);
+		renderHtml(res);        
 	}
 });
 

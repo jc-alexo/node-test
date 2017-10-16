@@ -34,14 +34,14 @@
         </form>
         <form action="/grab" method="POST">
             <fieldset>
-                <legend>RETRIEVE GAMES</legend>
-                <select name="listGrabGames" size="8" disabled></select>
+                <legend>UPDATE GAMES</legend>
+                <select name="games" size="8" disabled></select>
                 <br>
                 <br>
-                <input name="searchGameId" type="text"></input>
+                <input name="_id" type="text" placeholder="ID"></input>
                 <br>
                 <br>
-                <input name="searchGameName" type="text"></input>
+                <input name="name" type="text" placeholder="Name"></input>
                 <br>
                 <br>
                 <button type="submit">search games</button>
@@ -50,7 +50,7 @@
         <form action="/del" method="POST">
             <fieldset>
                 <legend>DELETE GAMES</legend>
-                <select name="listDelGames"></select>
+                <select name="_id"></select>
                 <br>
                 <br>
                 <button type="submit">delete game</input>

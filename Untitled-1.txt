@@ -1,16 +1,14 @@
 const express = require("express", "4.16.2");
 const bodyParser = require("body-parser");
 const MongoDb = require("mongodb");
-const mongoose = require("mongoose");
 
 const MongoClient = MongoDb.MongoClient;
 const ObjectId = MongoDb.ObjectId;
 const app = express();
 
 app.set("view engine", "ejs");
-mongoose.connect("mongodb://localhost/test");
 
-MongoClient.connect("mongodb://localhost:27017/NodeTestDB", (err, database) => {
+MongoClient.connect("mongodb://localhost:27017/NodeTestDB", function (err, database) {
 	if (err) return console.log(err);
 	db = database;
 	app.listen(58531, () => {
@@ -21,41 +19,38 @@ MongoClient.connect("mongodb://localhost:27017/NodeTestDB", (err, database) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    
-	if (db.collection("games"))
-	{
-		db.collection("games").find().toArray((err, result) => {
+
+	if (db.collection("games")) {
+		db.collection("games").find().toArray(function (err, result) {
 			if (err) return console.log(err);
-			renderHtml(res, {games: result});     
+			renderHtml(res, { games: result });
 		});
-	}
-	else{
+	} else {
 		renderHtml(res);
 	}
 });
 
 app.post("/del", (req, res) => {
-	const {_id} = req.body;
+	const _id = req.body._id;
+
 	console.log(req.body);
-	db.collection("games").deleteOne({_id: ObjectId(_id)}, (err) => {
+	db.collection("games").deleteOne({ _id: ObjectId(_id) }, (err) => {
 		if (err) return console.log(err);
-		console.log(req.body);        
+		console.log(req.body);
 		res.redirect("/");
 		// console.log('entry deleted')
 
-           
 	});
 });
 
 app.post("/add", (req, res) => {
 	db.collection("games").save(req.body, (err, result) => {
 		if (err) return console.log(err);
-
 		console.log("saved to database");
 		res.redirect("/");
 	});
 });
-function renderHtml (res, data) {
+function renderHtml(res, data) {
 	res.render("index.ejs", data);
 }
 
