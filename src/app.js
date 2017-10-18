@@ -1,60 +1,116 @@
-"use strict";
-
 var express = require("express", "4.16.2");
-var bodyParser = require("body-parser");
-var MongoDb = require("mongodb");
+var mongoose = require("mongoose");
+var User = require("./models/user");
 
-var MongoClient = MongoDb.MongoClient;
-var ObjectId = MongoDb.ObjectId;
 var app = express();
 
-app.set("view engine", "ejs");
-
-MongoClient.connect("mongodb://localhost:27017/NodeTestDB", function (err, database) {
-	if (err) return console.log(err);
-	db = database;
-	app.listen(58531, function () {
-		console.log("connection established with NoSQL database");
-	});
+var dex = new User({
+	name: "Dex",
+	username: "dexjackson",
+	password: "passc0de"
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
+dex.dudify(function (err, name) {
+	if (err) throw err;
 
-app.get("/", function (req, res) {
-
-	if (db.collection("games")) {
-		db.collection("games").find().toArray(function (err, result) {
-			if (err) return console.log(err);
-			renderHtml(res, { games: result });
-		});
-	} else {
-		renderHtml(res);
-	}
+	console.log("Your dude name is: " + name);
 });
 
-app.post("/del", function (req, res) {
-	var _id = req.body._id;
+dex.save(function () {
+	if (err) throw err;
 
-	console.log(req.body);
-	db.collection("games").deleteOne({ _id: ObjectId(_id) }, function (err) {
-		if (err) return console.log(err);
-		console.log(req.body);
-		res.redirect("/");
-		// console.log('entry deleted')
-
-	});
+	console.log("User saved successfully");
 });
 
-app.post("/add", function (req, res) {
-	db.collection("games").save(req.body, function (err, result) {
-		if (err) return console.log(err);
+mongoose.connect("mongodb://localhost/NodeTestDB");
 
-		console.log("saved to database");
-		res.redirect("/");
-	});
-});
-function renderHtml(res, data) {
-	res.render("index.ejs", data);
-}
+// const model = require("./schema.js");
 
-app.listen(4560);
+// const mongoDb = "mongodb://localhost/NodeTestDB";
+
+// mongoose.connect(mongoDb, {
+// 	useMongoClient: true
+// })
+
+// const db = mongoose.connection;
+
+// db.on("error", console.error.bind(console, "Connection error"));
+
+// const bodyParser = require("body-parser");
+
+
+// const MongoClient = mongoDb.MongoClient;
+// const ObjectId = mongoDb.ObjectId;
+
+
+// app.set("view engine", "ejs");
+
+
+// mongoose.connect("mongodb://localhost/test");
+
+// let db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", function() {
+// });
+
+// app.get("/", (req, res) => {
+// 	res.sendFile(__dirname + "/index.html")
+// });
+
+// app.listen(4560);
+
+
+/////////////////////
+// MongoClient.connect("mongodb://localhost:27017/NodeTestDB", (err, database) => {
+// 	if (err) return console.log(err);
+// 	db = database;
+// 	app.listen(58531, () => {
+// 		console.log("connection established with NoSQL database");
+// 	});
+// });
+
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.get("/", (req, res) => {
+
+// 	if (db.collection("games"))
+// 	{
+// 		db.collection("games").find().toArray((err, result) => {
+// 			if (err) return console.log(err);
+// 			renderHtml(res, {games: result});     
+// 		});
+// 	}
+// 	else{
+// 		renderHtml(res);
+// 	}
+// });
+
+// app.post("/del", (req, res) => {
+// 	const {_id} = req.body;
+// 	console.log(req.body);
+// 	db.collection("games").deleteOne({_id: ObjectId(_id)}, (err) => {
+// 		if (err) return console.log(err);
+// 		console.log(req.body);        
+// 		res.redirect("/");
+// 		// console.log('entry deleted')
+
+
+// 	});
+// });
+
+// app.post("/add", (req, res) => {
+// 	db.collection("games").save(req.body, (err, result) => {
+// 		if (err) return console.log(err);
+
+// 		console.log("saved to database");
+// 		res.redirect("/");
+// 	});
+// });
+// function renderHtml (res, data) {
+// 	res.render("../index.html", data);
+// }
+// app.get("/", (req, res) => {
+// 	renderHtml(res);
+// });
+
+// app.listen(4560);

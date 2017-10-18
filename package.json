@@ -7,12 +7,13 @@
   "author": "Alex Ofoedu <alexander@junglecreations.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "./node_modules/.bin/eslint app.js --fix && ./node_modules/.bin/babel app.js -d src && nodemon app.js",
+    "dev": "./node_modules/.bin/eslint app.js --fix && ./node_modules/.bin/eslint user.js --fix  && ./node_modules/.bin/babel app.js -d src && ./node_modules/.bin/babel user.js -d src/models && nodemon src/app.js",
     "build": "./node_modules/.bin/babel app.js -d src"
   },
   "dependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
