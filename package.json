@@ -7,7 +7,15 @@
   "author": "Alex Ofoedu <alexander@junglecreations.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "./node_modules/.bin/eslint app.js --fix && ./node_modules/.bin/eslint user.js --fix  && ./node_modules/.bin/babel app.js -d src && ./node_modules/.bin/babel user.js -d src/models && nodemon src/app.js",
+    "dev": 
+    "./node_modules/.bin/eslint ../app.js --fix &&
+     ./node_modules/.bin/eslint ../user.js --fix  && 
+     ./node_modules/.bin/eslint ../models/author.js --fix  && 
+     ./node_modules/.bin/eslint ../models/book.js --fix  && 
+     ./node_modules/.bin/eslint ../models/author.js --fix  && 
+     ./node_modules/.bin/babel app.js -d src &&
+      ./node_modules/.bin/babel user.js -d src/models &&
+       nodemon src/app.js",
     "build": "./node_modules/.bin/babel app.js -d src"
   },
   "dependencies": {
