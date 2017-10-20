@@ -4,25 +4,27 @@ var User = require("./models/user");
 
 const app = express();
 
+let dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");
+
 var dex = new User({
-	name: "Dex",
-	username: "dexjackson",
-	password: "passc0de"
+	name: "Ayatollah",
+	username: "ayatollah",
+	password: "jihadwarrior"
 });
 
 dex.dudify((err, name) => {
 	if (err) throw err;
 
-	console.log("Your dude name is: " + name);	
+	console.log("Your dude name is: " + name);
 });
 
-dex.save(()=>{
+dex.save((err)=>{
 	if (err) throw err;
 
 	console.log("User saved successfully");
 });
 
-mongoose.connect("mongodb://localhost/NodeTestDB");
+dbConn.disconnect();
 
 
 

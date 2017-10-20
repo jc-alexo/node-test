@@ -23,6 +23,15 @@ userSchema.methods.dudify = function () {
 	return _this.name;
 };
 
+userSchema.pre("save", function (next) {
+	var currentDate = new Date();
+
+	_this.updated_at = currentDate;
+
+	if (!_this.created_at) _this.created_at = currentDate;
+
+	next();
+});
 var User = mongoose.model("User", userSchema);
 
 module.exports = User;

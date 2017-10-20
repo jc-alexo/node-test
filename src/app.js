@@ -4,10 +4,12 @@ var User = require("./models/user");
 
 var app = express();
 
+var dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");
+
 var dex = new User({
-	name: "Dex",
-	username: "dexjackson",
-	password: "passc0de"
+	name: "Ayatollah",
+	username: "ayatollah",
+	password: "jihadwarrior"
 });
 
 dex.dudify(function (err, name) {
@@ -16,13 +18,13 @@ dex.dudify(function (err, name) {
 	console.log("Your dude name is: " + name);
 });
 
-dex.save(function () {
+dex.save(function (err) {
 	if (err) throw err;
 
 	console.log("User saved successfully");
 });
 
-mongoose.connect("mongodb://localhost/NodeTestDB");
+dbConn.disconnect();
 
 // const model = require("./schema.js");
 
