@@ -7,7 +7,7 @@
   "author": "Alex Ofoedu <alexander@junglecreations.com>",
   "license": "MIT",
   "scripts": {
-      "dev": "./node_modules/.bin/eslint ./app.js --fix && ./node_modules/.bin/eslint ./models/user.js --fix && ./node_modules/.bin/eslint ./models/author.js --fix  && ./node_modules/.bin/eslint ./models/book.js --fix && ./node_modules/.bin/eslint ../models/bookinstance.js --fix && ./node_modules/.bin/babel ./app.js -d ./src && ./node_modules/.bin/babel models/user.js -d src && ./node_modules/.bin/babel ./models/book.js -d src && ./node_modules/.bin/babel ./models/author.js -d src && ./node_modules/.bin/babel ./models/bookinstance.js -d src && nodemon src/app.js",
+      "dev": "./node_modules/.bin/eslint ./app.js --fix && ./node_modules/.bin/eslint ./models/user.js --fix && ./node_modules/.bin/eslint ./models/author.js --fix  && ./node_modules/.bin/eslint ./models/book.js --fix && ./node_modules/.bin/eslint ../models/bookinstance.js --fix && ./node_modules/.bin/eslint ../models/genre.js --fix && ./node_modules/.bin/babel ./app.js -d ./src && ./node_modules/.bin/babel ./models/user.js -d src && ./node_modules/.bin/babel ./models/book.js -d src && ./node_modules/.bin/babel ./models/author.js -d src && ./node_modules/.bin/babel ./models/bookinstance.js -d src && ./node_modules/.bin/babel ./models/genre.js -d src && nodemon src/app.js",
     "build": "./node_modules/.bin/babel app.js -d src"
   },
   "dependencies": {

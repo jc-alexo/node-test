@@ -7,12 +7,12 @@ let BookSchema = Schema({
 	author: {type: Schema.ObjectId, ref: "Author", required: true},
 	summary: {type: String, required: true},
 	isbn: {type: String, require: true},
-	genre: [{type: Schema.OBjectId, ref: "Genre"}]
+	genre: [{type: Schema.ObjectId, ref: "Genre"}]
 });
 
 BookSchema
 	.virtual("url")
-	.get(() => {
+	.get(function() {
 		return "/catalog/book" + this._id;
 	});
 

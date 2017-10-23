@@ -13,13 +13,13 @@ let AuthorSchema = Schema(
 
 AuthorSchema
 	.virtual("name")
-	.get(() => {
+	.get(function() {
 		return this.family_name + "," + this.first_name;
 	});
 
 AuthorSchema
 	.virtual("url")
-	.get(() => {
+	.get(function() {
 		return "/catalog/author" + this._id;
 	});
 

@@ -1,4 +1,4 @@
-var _this = this;
+"use strict";
 
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;

@@ -1,4 +1,4 @@
-var _this = this;
+"use strict";
 
 var mongoose = require("mongoose");
 
@@ -12,11 +12,11 @@ var AuthorSchema = Schema({
 });
 
 AuthorSchema.virtual("name").get(function () {
-	return _this.family_name + "," + _this.first_name;
+	return this.family_name + "," + this.first_name;
 });
 
 AuthorSchema.virtual("url").get(function () {
-	return "/catalog/author" + _this._id;
+	return "/catalog/author" + this._id;
 });
 
 module.exports = mongoose.model("Author", AuthorSchema);

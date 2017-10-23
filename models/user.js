@@ -1,5 +1,3 @@
-var _this = this;
-
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 

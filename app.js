@@ -1,6 +1,10 @@
 const express = require("express", "4.16.2");
 const mongoose = require("mongoose");
-var User = require("./models/user");
+const User = require("./models/user");
+const Author = require("./models/author");
+const Book = require("./models/book");
+const BookInstance = require("./models/bookinstance");
+const Genre = require("./models/genre");
 
 const app = express();
 

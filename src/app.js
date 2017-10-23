@@ -1,6 +1,12 @@
+"use strict";
+
 var express = require("express", "4.16.2");
 var mongoose = require("mongoose");
 var User = require("./models/user");
+var Author = require("./models/author");
+var Book = require("./models/book");
+var BookInstance = require("./models/bookinstance");
+var Genre = require("./models/genre");
 
 var app = express();
 

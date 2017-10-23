@@ -1,4 +1,4 @@
-var _this = this;
+"use strict";
 
 var mongoose = require('mongoose');
 
@@ -12,7 +12,7 @@ var BookInstanceSchema = Schema({
 });
 
 BookInstanceSchema.virtual("url").get(function () {
-    return "catalog/bookinstance/" + _this._id;
+    return "catalog/bookinstance/" + this._id;
 });
 
 module.exports = mongoose.model("BookInstance", BookInstanceSchema);
