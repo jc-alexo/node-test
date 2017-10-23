@@ -2,22 +2,45 @@
 
 var express = require("express", "4.16.2");
 var mongoose = require("mongoose");
-var User = require("./models/user");
-var Author = require("./models/author");
-var Book = require("./models/book");
-var BookInstance = require("./models/bookinstance");
+// const User = require("./models/user");
+// const Author = require("./models/author");
+// const Book = require("./models/book");
+// const BookInstance = require("./models/bookinstance");
 var Genre = require("./models/genre");
+var Game = require("./models/game");
+var bodyParser = require("body-parser");
+var async = require("async");
+// const indexHtml = require("./html/index.html");
 
 var app = express();
+
+app.set("view engine", "ejs");
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var conn = "mongodb://localhost/NodeTestDB";
 
 mongoose.connect(conn, {
-  useMongoClient: true
+	useMongoClient: true
 });
+
+app.listen(4560);
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "conn error"));
+
+app.get("/", function (req, res) {
+
+	// db.collection("games") ? db.collection("games").find().toArray(
+	// 	(err, result) => {
+	// 		if (err) return console.log(err);
+	// 		renderHtml(res, {games:result}); }) : res.sendFile(__dirname + "./html/index.html");
+	res.sendFile(__dirname + "/html/index.html");
+});
+
+function renderHtml(res, data) {
+	res.render("html/index.html", data);
+}
 
 // let dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");
 

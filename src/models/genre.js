@@ -5,7 +5,8 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var GenreSchema = Schema({
-    name: { type: String, required: true, min: 3, max: 100 }
+    name: { type: String, required: true, min: 3, max: 100 },
+    subgenre: { type: String, required: false, min: 3, max: 100 }
 });
 
 GenreSchema.virtual("url").get(function () {

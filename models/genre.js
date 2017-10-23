@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const GenreSchema = Schema(
     {
-        name: {type: String, required: true, min: 3, max: 100}
+        name: {type: String, required: true, min: 3, max: 100},
+        subgenre: {type: String, required: false, min: 3, max: 100}
     }
 );
 
