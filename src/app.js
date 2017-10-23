@@ -4,27 +4,37 @@ var User = require("./models/user");
 
 var app = express();
 
-var dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");
+var conn = "mongodb://localhost/NodeTestDB";
 
-var dex = new User({
-	name: "Ayatollah",
-	username: "ayatollah",
-	password: "jihadwarrior"
+mongoose.connect(conn, {
+  useMongoClient: true
 });
 
-dex.dudify(function (err, name) {
-	if (err) throw err;
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "conn error"));
 
-	console.log("Your dude name is: " + name);
-});
+// let dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");
 
-dex.save(function (err) {
-	if (err) throw err;
+// var dex = new User({
+// 	name: "Ayatollah",
+// 	username: "ayatollah",
+// 	password: "jihadwarrior"
+// });
 
-	console.log("User saved successfully");
-});
+// dex.dudify((err, name) => {
+// 	if (err) throw err;
 
-dbConn.disconnect();
+// 	console.log("Your dude name is: " + name);
+// });
+
+// dex.save((err)=>{
+// 	if (err) throw err;
+
+// 	console.log("User saved successfully");
+// });
+
+// dbConn.disconnect();
+
 
 // const model = require("./schema.js");
 

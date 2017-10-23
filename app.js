@@ -8,10 +8,10 @@ const conn = "mongodb://localhost/NodeTestDB";
 
 mongoose.connect(conn, {
 	useMongoClient: true
-})
+});
 
 let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'conn error'));
+db.on("error", console.error.bind(console, "conn error"));
 
 // let dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");
 

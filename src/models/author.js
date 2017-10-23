@@ -1,26 +1,22 @@
-let mongoose = require('mongoose');
+var _this = this;
 
-let Schema = mongoose.Schema;
+var mongoose = require("mongoose");
 
-let AuthorSchema = Schema(
-    {
-        first_name: {type: String, required: true, max: 100},
-        family_name: {type: String, required: true, max: 100},
-        date_of_birth: {type: Date},
-        date_of_death: {type: Date},
-    }
-);
+var Schema = mongoose.Schema;
 
-AuthorSchema
-.virtual('name')
-.get(() => {
-    return this.family_name + ',' + this.first_name;
+var AuthorSchema = Schema({
+	first_name: { type: String, required: true, max: 100 },
+	family_name: { type: String, required: true, max: 100 },
+	date_of_birth: { type: Date },
+	date_of_death: { type: Date }
 });
 
-AuthorSchema
-.virtual('url')
-.get(() => {
-    return '/catalog/author' + this._id;
+AuthorSchema.virtual("name").get(function () {
+	return _this.family_name + "," + _this.first_name;
+});
+
+AuthorSchema.virtual("url").get(function () {
+	return "/catalog/author" + _this._id;
 });
 
 module.exports = mongoose.model("Author", AuthorSchema);
