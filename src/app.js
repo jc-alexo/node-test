@@ -14,6 +14,7 @@ var async = require("async");
 
 var app = express();
 
+app.set("views", "" + app.path() + "/views");
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,16 +31,48 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "conn error"));
 
 app.get("/", function (req, res) {
-
+	db.collection("games") ? db.collection("games").find().toArray(function (err, result) {
+		res.render("index.ejs", { games: result });
+	}) : res.sendFile(__dirname + "./html/index.html");
 	// db.collection("games") ? db.collection("games").find().toArray(
 	// 	(err, result) => {
 	// 		if (err) return console.log(err);
 	// 		renderHtml(res, {games:result}); }) : res.sendFile(__dirname + "./html/index.html");
-	res.sendFile(__dirname + "/html/index.html");
+});
+
+var genres = [];
+
+app.post("/add", function (req, res) {
+
+	// db.collection("games").save(req.body, (err, result) => {
+
+	if (err) return console.log(err);
+	console.log("saved to database");
+	res.redirect("/");
+
+	// });
 });
 
 function renderHtml(res, data) {
 	res.render("html/index.html", data);
+}
+
+function gameCreate(name, developer, genre, year, cb) {
+	var gameAttr = { name: name, developer: developer, genre: genre, year: year };
+
+	var game = new Game(gameAttr);
+
+	game.save(function () {
+
+		if (err) {
+			cb(err, null);
+			return;
+		}
+
+		console.log("New Game! " + "name: " + name + "genre" + genre);
+		genre.push(genre);
+		cb(null, genre);
+	});
 }
 
 // let dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");

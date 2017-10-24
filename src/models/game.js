@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 
 var GameSchema = Schema({
 	name: { type: String, required: true, max: 100 },
+	developer: { type: String, required: true, max: 100 },
 	genre: { type: Schema.ObjectId, ref: "Genre", required: true },
 	year: { type: String, required: true, max: 100 }
 });

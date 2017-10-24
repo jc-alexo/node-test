@@ -12,6 +12,7 @@ const async = require("async");
 
 const app = express();
 
+app.set("views", ""+app.path()+"/views");
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -28,47 +29,57 @@ let db = mongoose.connection;
 db.on("error", console.error.bind(console, "conn error"));
 
 app.get("/", (req, res) => {
-
+	db.collection("games") ? db.collection("games").find().toArray(
+		(err, result) => {
+			res.render("index.ejs", {games: result});
+		}) : res.sendFile(__dirname + "./html/index.html");
 	// db.collection("games") ? db.collection("games").find().toArray(
 	// 	(err, result) => {
 	// 		if (err) return console.log(err);
 	// 		renderHtml(res, {games:result}); }) : res.sendFile(__dirname + "./html/index.html");
-	res.sendFile(__dirname + "/html/index.html");
 });
 
 var genres = [];
 
-// function gameCreate(name, developer, genre, year, cb)
-// {
-// 	let gameAttr = {name: name, developer: developer, genre: genre, year: year}
 
-// 	let game = new Game(gameAttr);
-
-// 	game.save(() => {
-		
-// 		if (err)
-// 		{
-// 			cb(err, null);
-// 			return;
-// 		}
-		
-// 		console.log("New Game! " + "name: " + name + "genre" + genre);
-// 		genre.push(genre);
-// 		cb(null, genre);
-// 	});
-// }
 
 app.post("/add", (req, res) => {
-	db.collection("games").save(req.body, (err, result) => {
-		if (err) return console.log(err);
+	
+	
 
-		console.log("saved to database");
-		res.redirect("/");
-	});
+	// db.collection("games").save(req.body, (err, result) => {
+
+	if (err) return console.log(err);
+	console.log("saved to database");
+	res.redirect("/");
+
+	// });
 });
 
 function renderHtml(res, data) {
 	res.render("html/index.html", data);
+}
+
+
+
+function gameCreate(name, developer, genre, year, cb)
+{
+	let gameAttr = {name: name, developer: developer, genre: genre, year: year};
+
+	let game = new Game(gameAttr);
+
+	game.save(() => {
+		
+		if (err)
+		{
+			cb(err, null);
+			return;
+		}
+		
+		console.log("New Game! " + "name: " + name + "genre" + genre);
+		genre.push(genre);
+		cb(null, genre);
+	});
 }
 
 
