@@ -31,26 +31,21 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "conn error"));
 
 app.get("/", function (req, res) {
-	db.collection("games") ? db.collection("games").find().toArray(function (err, result) {
-		res.render("index.ejs", { games: result });
+	db.collection("game") ? db.collection("game").find().toArray(function (err, result) {
+		res.render("index.ejs", { game: result });
 	}) : res.sendFile(__dirname + "./html/index.html");
-	// db.collection("games") ? db.collection("games").find().toArray(
-	// 	(err, result) => {
-	// 		if (err) return console.log(err);
-	// 		renderHtml(res, {games:result}); }) : res.sendFile(__dirname + "./html/index.html");
 });
 
 var genres = [];
 
 app.post("/add", function (req, res) {
 
-	// db.collection("games").save(req.body, (err, result) => {
+	db.collection("game").save(req.body, function (err, result) {
 
-	if (err) return console.log(err);
-	console.log("saved to database");
-	res.redirect("/");
-
-	// });
+		if (err) return console.log(err);
+		console.log("saved to database");
+		res.redirect("/");
+	});
 });
 
 function renderHtml(res, data) {

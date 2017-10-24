@@ -25,7 +25,7 @@ userSchema.pre("save", function (next) {
 	var currentDate = new Date();
 
 	_this.updated_at = currentDate;
-
+	
 	if (!_this.created_at) _this.created_at = currentDate;
 
 	next();

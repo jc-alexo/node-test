@@ -29,29 +29,25 @@ let db = mongoose.connection;
 db.on("error", console.error.bind(console, "conn error"));
 
 app.get("/", (req, res) => {
-	db.collection("games") ? db.collection("games").find().toArray(
+	db.collection("game") ? db.collection("game").find().toArray(
 		(err, result) => {
-			res.render("index.ejs", {games: result});
+			res.render("index.ejs", {game: result});
 		}) : res.sendFile(__dirname + "./html/index.html");
-	// db.collection("games") ? db.collection("games").find().toArray(
-	// 	(err, result) => {
-	// 		if (err) return console.log(err);
-	// 		renderHtml(res, {games:result}); }) : res.sendFile(__dirname + "./html/index.html");
 });
-
-var genres = [];
-
-
 
 app.post("/add", (req, res) => {
 	
-	
+	let attrs = {name: req.name, developer: req.developer, genre: [req.genre, req.subgenre], year: req.year};
+	let newGame = new Game(attrs);
+	newGame.save
 
-	// db.collection("games").save(req.body, (err, result) => {
+	// let newGame = new Game({req.body.developer});
 
-	if (err) return console.log(err);
-	console.log("saved to database");
-	res.redirect("/");
+	// db.collection("game").save(req.body, (err, result) => {
+
+	// 	if (err) return console.log(err);
+	// 	console.log("saved to database");
+	// 	res.redirect("/");
 
 	// });
 });
