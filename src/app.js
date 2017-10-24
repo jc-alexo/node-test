@@ -14,7 +14,7 @@ var async = require("async");
 
 var app = express();
 
-app.set("views", "" + app.path() + "/views");
+app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
