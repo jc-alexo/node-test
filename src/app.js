@@ -36,16 +36,24 @@ app.get("/", function (req, res) {
 	}) : res.sendFile(__dirname + "./html/index.html");
 });
 
-var genres = [];
-
 app.post("/add", function (req, res) {
 
-	db.collection("game").save(req.body, function (err, result) {
-
+	var attrs = { name: req.name, developer: req.developer, genre: [req.genre, req.subgenre], year: req.year };
+	var newGame = new Game(attrs);
+	newGame.save(function (err, newGame) {
 		if (err) return console.log(err);
-		console.log("saved to database");
 		res.redirect("/");
 	});
+
+	// let newGame = new Game({req.body.developer});
+
+	// db.collection("game").save(req.body, (err, result) => {
+
+	// 	if (err) return console.log(err);
+	// 	console.log("saved to database");
+	// 	res.redirect("/");
+
+	// });
 });
 
 function renderHtml(res, data) {

@@ -6,9 +6,9 @@ const GameSchema = Schema({
 	name: {type: String, required: true, max: 100},
 	developer: {type: String, required: true, max: 100},
 	genre: {type: Schema.ObjectId, ref: "Genre", required: true},
-    year: {type: Number, required: true, max: 100},
-    created_at: {type: Date, required: true},
-    updated_at: {type: Date, required: true}
+	year: {type: Number, required: true, max: 100},
+	created_at: {type: Date, required: true},
+	updated_at: {type: Date, required: true}
 });
 
 GameSchema
@@ -17,7 +17,7 @@ GameSchema
 		return "catalog/game/" + this._id;
 	});
 
-GameSchema.pre("save", (next) => {
+GameSchema.pre("save", function (next) {
 	
 	let currentDate = new Date();
 
@@ -25,6 +25,6 @@ GameSchema.pre("save", (next) => {
 
 	if (!this.created_at) this.created_at = currentDate;
 
-})
+});
 
 module.exports = mongoose.model("Game", GameSchema);

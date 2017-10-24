@@ -36,10 +36,13 @@ app.get("/", (req, res) => {
 });
 
 app.post("/add", (req, res) => {
-	
+
 	let attrs = {name: req.name, developer: req.developer, genre: [req.genre, req.subgenre], year: req.year};
 	let newGame = new Game(attrs);
-	newGame.save
+	newGame.save((err, newGame) => {
+		if (err) return console.log(err);
+		res.redirect("/");
+	});
 
 	// let newGame = new Game({req.body.developer});
 
