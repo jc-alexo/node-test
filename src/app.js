@@ -8,6 +8,8 @@ var mongoose = require("mongoose");
 // const BookInstance = require("./models/bookinstance");
 var Genre = require("./models/genre");
 var Game = require("./models/game");
+// const Genre = mongoose.model("Genre", GenreSchema);
+// const Game = mongoose.model("Game", GameSchema);
 var bodyParser = require("body-parser");
 var async = require("async");
 // const indexHtml = require("./html/index.html");
@@ -25,8 +27,6 @@ mongoose.connect(conn, {
 	useMongoClient: true
 });
 
-app.listen(4560);
-
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "conn error"));
 
@@ -38,22 +38,22 @@ app.get("/", function (req, res) {
 
 app.post("/add", function (req, res) {
 
-	var attrs = { name: req.name, developer: req.developer, genre: [req.genre, req.subgenre], year: req.year };
+	// let {name, developer, genre: [genre, subgenre], year} = req.body;
+	// let attrs = {name: req.name, developer: req.developer, genre: [req.genre, req.subgenre], year: req.year};
+
+	// let attrs = {};
+	// let newGame = new Game(attrs);
+	// newGame.create(attrs, (err, newGame) => {
+	// 	if (err) return console.log(err);
+	// 	res.redirect("/");
+	// console.log(req.body);
+
+	var attrs = { name: req.body.name, developer: req.body.developer, genre: req.body.genre, year: req.body.year };
 	var newGame = new Game(attrs);
-	newGame.save(function (err, newGame) {
+	newGame.save(attrs, function (err, newGame) {
 		if (err) return console.log(err);
 		res.redirect("/");
 	});
-
-	// let newGame = new Game({req.body.developer});
-
-	// db.collection("game").save(req.body, (err, result) => {
-
-	// 	if (err) return console.log(err);
-	// 	console.log("saved to database");
-	// 	res.redirect("/");
-
-	// });
 });
 
 function renderHtml(res, data) {
@@ -77,6 +77,8 @@ function gameCreate(name, developer, genre, year, cb) {
 		cb(null, genre);
 	});
 }
+
+app.listen(4560);
 
 // let dbConn = mongoose.connect("mongodb://localhost/NodeTestDB");
 
