@@ -1,24 +1,30 @@
+//////////// REQUIRES
 const express = require("express", "4.16.2");
+
+//////////// DB
 const mongoose = require("mongoose");
-// const User = require("./models/user");
-// const Author = require("./models/author");
-// const Book = require("./models/book");
-// const BookInstance = require("./models/bookinstance");
+
+//////// INPUT PARSER
+const bodyParser = require("body-parser");
+
+//////// ASYNC
+const async = require("async");
+
+//////// MONGOOSE MODELS
 const Genre = require("./models/genre");
 const Game = require("./models/game");
-// const Genre = mongoose.model("Genre", GenreSchema);
-// const Game = mongoose.model("Game", GameSchema);
-const bodyParser = require("body-parser");
-const async = require("async");
-// const indexHtml = require("./html/index.html");
 
+
+//////////// SERVER CONFIG
 const app = express();
 
+//////// TEMPLATING
 app.set("views", __dirname+"/views");
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+//////// DB CONN
 const conn = "mongodb://localhost/NodeTestDB";
 
 mongoose.connect(conn, {
@@ -27,60 +33,64 @@ mongoose.connect(conn, {
 
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "conn error"));
+////////////
+
+//////////// ROUTES
 
 app.get("/", (req, res) => {
-	db.collection("game") ? db.collection("game").find().toArray(
-		(err, result) => {
-			res.render("index.ejs", {game: result});
+	db.collection("games") ? db.collection("games").find().toArray(
+		(err, results) => {
+			res.render("index.ejs", {games: results});
 		}) : res.sendFile(__dirname + "./html/index.html");
 });
 
 app.post("/add", (req, res) => {
-	
-	// let {name, developer, genre: [genre, subgenre], year} = req.body;
-	// let attrs = {name: req.name, developer: req.developer, genre: [req.genre, req.subgenre], year: req.year};
-
-	// let attrs = {};
-	// let newGame = new Game(attrs);
-	// newGame.create(attrs, (err, newGame) => {
-	// 	if (err) return console.log(err);
-	// 	res.redirect("/");
-	// console.log(req.body);
 
 	let attrs = {name: req.body.name, developer: req.body.developer, genre: req.body.genre, year: req.body.year};
 	let newGame = new Game(attrs);
 	newGame.save(attrs, (err, newGame) => {
-		if (err) return console.log(err);
+		if (err) return console.log(err)
 		res.redirect("/");
 	});
 
 });
 
-function renderHtml(res, data) {
-	res.render("html/index.html", data);
-}
+app.post("/del", (req, res) => {
+	
+	let {_id} = req.body._id;
+	db.collection("games").deleteOne({_id: ObjectId(_id)}, (err) => {
 
-
-
-function gameCreate(name, developer, genre, year, cb)
-{
-	let gameAttr = {name: name, developer: developer, genre: genre, year: year};
-
-	let game = new Game(gameAttr);
-
-	game.save(() => {
-		
-		if (err)
-		{
-			cb(err, null);
-			return;
-		}
-		
-		console.log("New Game! " + "name: " + name + "genre" + genre);
-		genre.push(genre);
-		cb(null, genre);
+		if (err) return console.log(err);
+		res.redirect("/");
+	
 	});
-}
+});
+
+// function renderHtml(res, data) {
+// 	res.render("html/index.html", data);
+// }
+
+
+
+// function gameCreate(name, developer, genre, year, cb)
+// {
+// 	let gameAttr = {name: name, developer: developer, genre: genre, year: year};
+
+// 	let game = new Game(gameAttr);
+
+// 	game.save(() => {
+		
+// 		if (err)
+// 		{
+// 			cb(err, null);
+// 			return;
+// 		}
+		
+// 		console.log("New Game! " + "name: " + name + "genre" + genre);
+// 		genre.push(genre);
+// 		cb(null, genre);
+// 	});
+// }
 
 app.listen(4560);
 
