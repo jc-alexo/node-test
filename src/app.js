@@ -55,11 +55,19 @@ app.post("/add", function (req, res) {
 });
 
 app.post("/del", function (req, res) {
-	var _id = req.body._id._id;
 
-	db.collection("games").deleteOne({ _id: ObjectId(_id) }, function (err) {
+	// let {theid} = req.body;
+	// db.collection("games").findByIdAndRemove(req.body._id, (err) => {
 
-		if (err) console.log(err);
+	// 	if (err) return console.log(err);
+	// 	res.redirect("/");
+
+	// });
+
+	// let theGame = new Game();
+
+	Game.findByIdAndRemove(req.body._id, function (err) {
+		if (err) return console.log(err);
 		res.redirect("/");
 	});
 });

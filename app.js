@@ -49,7 +49,7 @@ app.post("/add", (req, res) => {
 	let attrs = {name: req.body.name, developer: req.body.developer, genre: req.body.genre, year: req.body.year};
 	let newGame = new Game(attrs);
 	newGame.save(attrs, (err, newGame) => {
-		if (err) return console.log(err)
+		if (err) return console.log(err);
 		res.redirect("/");
 	});
 
@@ -57,12 +57,19 @@ app.post("/add", (req, res) => {
 
 app.post("/del", (req, res) => {
 	
-	let {_id} = req.body._id;
-	db.collection("games").deleteOne({_id: ObjectId(_id)}, (err) => {
+	// let {theid} = req.body;
+	// db.collection("games").findByIdAndRemove(req.body._id, (err) => {
 
+	// 	if (err) return console.log(err);
+	// 	res.redirect("/");
+	
+	// });
+
+	// let theGame = new Game();
+
+	Game.findByIdAndRemove(req.body._id, (err) => {
 		if (err) return console.log(err);
 		res.redirect("/");
-	
 	});
 });
 
